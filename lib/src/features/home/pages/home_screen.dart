@@ -108,17 +108,29 @@ class _HomeScreen extends State<HomeScreen> {
                     ),
                   ),
                    SizedBox(width: 8),
-                  Container(
-                    padding:  EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[100],
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child:  Text(
-                      "Pinned",
-                      style: TextStyle(fontWeight: FontWeight.w500),
-                    ),
-                  ),
+                  GestureDetector(
+  onTap: () {
+    provider.changefiltermode("Pinned");
+  },
+  child: Container(
+    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+    decoration: BoxDecoration(
+      color: provider.filterMode == "Pinned"
+          ? Colors.orange[100]
+          : Colors.grey.shade100,
+      borderRadius: BorderRadius.circular(30),
+    ),
+    child: Text(
+      "Pinned",
+      style: TextStyle(
+        fontWeight: FontWeight.w600,
+        color: provider.filterMode == "Pinned"
+            ? Colors.orange
+            : Colors.black,
+      ),
+    ),
+  ),
+),
                   const SizedBox(width: 8),
                   Container(
                 padding:  EdgeInsets.symmetric(horizontal: 0, vertical: 0),

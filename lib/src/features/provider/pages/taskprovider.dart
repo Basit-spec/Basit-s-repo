@@ -29,6 +29,19 @@ class TaskProvider extends ChangeNotifier {
 
 
 
+
+    String filterMode="All";
+
+    void changefiltermode(String value) {
+  if (filterMode == value) {
+    filterMode = "All";   // 🔁 untab
+  } else {
+    filterMode = value;   // ✅ select
+  }
+  notifyListeners();
+}
+
+
     
 
      Future<void> tooglepin({
@@ -155,27 +168,27 @@ class TaskProvider extends ChangeNotifier {
 
   // filter function
 
-  List<Map<String,dynamic>> filtertasks(){
+  List<Map<String, dynamic>> filtertasks() {
 
-    if(priority=="All"){
-      return tasklist;
-    }
-
-    if(priority=="Low"){
-      return tasklist.where((task)=> task["priority"]=="Low").toList();
-    }
-
-    if(priority=="Medium"){
-      return tasklist.where((task)=>task["priority"]=="Medium").toList();
-    }
-
-    if(priority=="High"){
-      return tasklist.where((task)=>task["priority"]=="High").toList();
-    }
-
+  // agar kuch bhi filter nahi hai
+  if (priority == "All" && filterMode != "Pinned") {
     return tasklist;
-
   }
+
+  return tasklist.where((e) {
+
+    if (priority != "All" && e["priority"] != priority) {
+      return false;
+    }
+
+    if (filterMode == "Pinned" && e["pinned"] != true) {
+      return false;
+    }
+
+    return true;
+
+  }).toList();
+}
 
 
 
